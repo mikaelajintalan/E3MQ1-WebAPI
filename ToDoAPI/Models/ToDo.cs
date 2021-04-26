@@ -12,7 +12,7 @@ namespace ToDoAPI.Models
         [Key]
         public int ToDoId { get; set; }
 
-        [Column(TypeName ="nvarchar=(100)")]
+        [Column(TypeName ="nvarchar(100)")]
         public string ToDoName { get; set; }
         public bool Completed { get; set; }
     }

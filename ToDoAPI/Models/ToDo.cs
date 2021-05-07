@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 namespace ToDoAPI.Models
 {
     public class ToDo
-    {
-        [Key]
-        public int ToDoId { get; set; }
-
-        [Column(TypeName ="nvarchar(100)")]
-        public string ToDoName { get; set; }
+    {      
+        public int Id { get; set; }
+        public string Name { get; set; }
         public bool Completed { get; set; }
     }
 }

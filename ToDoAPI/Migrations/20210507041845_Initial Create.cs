@@ -10,14 +10,14 @@ namespace ToDoAPI.Migrations
                 name: "ToDos",
                 columns: table => new
                 {
-                    ToDoId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ToDoName = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Completed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ToDos", x => x.ToDoId);
+                    table.PrimaryKey("PK_ToDos", x => x.Id);
                 });
         }
 

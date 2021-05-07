@@ -5,12 +5,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.HttpsPolicy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ToDoAPI.Models;
+using ToDoAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ToDoAPI
@@ -28,14 +29,11 @@ namespace ToDoAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ToDoAPI", Version = "v1" });
-            });
-
             services.AddDbContext<ToDoDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IToDoService, ToDoService>();
+            services.AddCors();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,13 +42,17 @@ namespace ToDoAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ToDoAPI v1"));
             }
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(
+               options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+           );
 
             app.UseEndpoints(endpoints =>
             {

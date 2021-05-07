@@ -10,7 +10,7 @@ namespace ToDoAPI.Models
     {
         public ToDoDbContext(DbContextOptions<ToDoDbContext> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
         public DbSet<ToDo> ToDos { get; set; }
     }

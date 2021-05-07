@@ -9,7 +9,7 @@ using ToDoAPI.Models;
 namespace ToDoAPI.Migrations
 {
     [DbContext(typeof(ToDoDbContext))]
-    [Migration("20210426085609_Initial Create")]
+    [Migration("20210507041845_Initial Create")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace ToDoAPI.Migrations
 
             modelBuilder.Entity("ToDoAPI.Models.ToDo", b =>
                 {
-                    b.Property<int>("ToDoId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -30,10 +30,10 @@ namespace ToDoAPI.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ToDoName")
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ToDoId");
+                    b.HasKey("Id");
 
                     b.ToTable("ToDos");
                 });
